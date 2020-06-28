@@ -25,6 +25,7 @@ app.get('/', function(req, res){
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
+
 mongoose.connect( process.env.MONGO_URI , {
   useNewUrlParser  : true ,
   useUnifiedTopology : true ,
@@ -33,7 +34,7 @@ mongoose.connect( process.env.MONGO_URI , {
 } ) ;
 
 const connection = mongoose.connection ;
-connection.on('error' , console.log("error")) ;
+connection.on('error' , ()=>{console.log("error")}) ;
 connection.once('open' , ()=>{
   console.log("DB connection established") ;
 }) ;
@@ -65,7 +66,7 @@ app.get("/api/hello", function (req, res) {
 
 
 const crypto = require('crypto') ;
-app.post('/api/shorturl/new' , async (req ,res)=>{
+app.post('/api/shorturl/new' , (req ,res)=>{
   
   const url = req.body.url_input ;
   const shortid = crypto.createHash('md5').update(url).digest('hex').slice(0,4) ;
@@ -80,7 +81,8 @@ app.post('/api/shorturl/new' , async (req ,res)=>{
       //if(err) res.json({error : "DB error"}) ;
       //res.json({})
       //} ) ;
-      try{
+      async ()=>{
+        try{
         let data = await URL.findOne({ original_url : url }) ;
         if(data) {
           res.json({
@@ -99,7 +101,8 @@ app.post('/api/shorturl/new' , async (req ,res)=>{
       } catch(err) {
         console.log(err) ;
         res.json({error : "server error"}) ;
-      }
+      }} ;
+      
     }
     
   
