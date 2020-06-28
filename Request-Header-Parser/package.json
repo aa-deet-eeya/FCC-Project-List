@@ -1,0 +1,16 @@
+{
+  "name": "request-header-parser",
+  "version": "0.0.1",
+  "description": "A simple req header parser logging in some data",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+		"express": "^5.0.0-alpha.2",
+		"cors": "^2.8.1"
+	},
+  "author": "aa-deet-eeya",
+  "license": "MIT"
+}
